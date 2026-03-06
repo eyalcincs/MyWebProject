@@ -8,64 +8,58 @@ for (int i = 0; i < array.Length; i++)
 }*/
 
 
+using Business.Concrete;
+using DataAccess.Concrete.InMemory;
+using Entities.Concrete;
+
 namespace ConsoleUI
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            /*
-            double temp=0;
-            for (int i = 1; i < 11; i++)
-            {
-                temp = temp + Math.Pow(i, 3);
-            }
-            Console.WriteLine(temp);
-            */
-            /*
-            int yil = 2026;
-            DateTime dateTime = DateTime.Now;   
-            Console.WriteLine("Doğum yılınızı giriniz");
-            DateTime dogumTarihi = Convert.ToDateTime(Console.ReadLine());
-
-            TimeSpan sonuc = dateTime - dogumTarihi;
-            Console.WriteLine("Yaşınız: " +(sonuc.Days)/365);
-            */
-            /*
-            Console.WriteLine("Lütfen Bir sayı giriniz.");
-            int toplam = 1;
-            int sayi=int.Parse(Console.ReadLine());
-            if (sayi == 0)
-            {
-                Console.WriteLine(toplam);
-            }
-            else
-            {
-                for (int i = sayi; i > 0; i--)
-                {
-                    toplam = toplam * i;
-
-
-                }
-                Console.WriteLine(toplam);  
-            }
-            *//*
-            Console.WriteLine("Lütfen sayıları giriniz.");
-            int a = Convert.ToInt32(Console.ReadLine());
-            int b = Convert.ToInt32(Console.ReadLine());
-            int toplam = 0;
+            ProductManager productManager = new ProductManager(new InMemoryProductDal());
             
-            for (int i = 0; i < a; i++)
+            Product product1 = new Product { ProductId = 5, ProductName = "Araba", CategoryId = 4, UnitPiece = 1, UnitPrice = 1000000 };
+            
+            productManager.Add(product1);
+            
+            productManager.Add(new Product { ProductId = 6, ProductName = "Ev", CategoryId = 4, UnitPiece = 1, UnitPrice = 7000000 });
+            
+            foreach (var item in productManager.GetAll())
             {
-                  toplam += b;
-                
+                Console.WriteLine(item.ProductName + "---->" + item.UnitPrice );
             }
-            Console.WriteLine(toplam);
-            */
-
-        
 
 
-    
+
+            productManager.Delete(product1);
+
+            Console.WriteLine("*******************");
+
+            foreach (var item in productManager.GetAll())
+            {
+                Console.WriteLine(item.ProductName + "---->" + item.UnitPrice);
+            }
+
+
+
+
+            productManager.Update(new Product { ProductId=6 ,CategoryId=4, ProductName="Motorsiklet", UnitPiece= 1, UnitPrice=7000000 });
+            
+            Console.WriteLine("*******************");
+            
+            foreach(var item in productManager.GetAll())
+            {
+                Console.WriteLine(item.ProductName + "---->" + item.UnitPrice);
+            }
+
+
+            
+        }
+
+
+
     }
 }
+
