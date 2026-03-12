@@ -33,7 +33,7 @@ namespace ConsoleUI
 
 
 
-            productManager.Delete(product1);
+            productManager.Delete(new Product { ProductId = 5, ProductName = "Araba", CategoryId = 4, UnitPiece = 1, UnitPrice = 1000000 });
 
             Console.WriteLine("*******************");
 
